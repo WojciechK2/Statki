@@ -10,14 +10,6 @@ namespace StatkiSilnik.Players
     public class ComputerPlayer : Player
     {
         private Random rnd = new Random();
-
-        private enum ShipOrientation
-        {
-            UP,
-            RIGHT,
-            DOWN,
-            LEFT
-        }
         public ComputerPlayer() : base()
         {
 
