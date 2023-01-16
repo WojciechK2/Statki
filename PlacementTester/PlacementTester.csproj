@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <BaseOutputPath>C:\Users\Windows\Source\Repos\StatkiSilnik\PlacementTester\bin</BaseOutputPath>
+    <BaseIntermediateOutputPath>C:\Users\Windows\Source\Repos\StatkiSilnik\PlacementTester\obj</BaseIntermediateOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StatkiSilnik\StatkiSilnik.csproj" />
+  </ItemGroup>
+
+</Project>
