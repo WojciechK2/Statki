@@ -25,9 +25,12 @@ List<ShipBase> Ships = new List<ShipBase>()
 };
 
 /* MAIN TEST */
-for (int i = 0; i < 100000; i++)
+for (int i = 0; i < 1000000; i++)
 {
-    //Console.WriteLine("Index {0}", i);
+    if (i % 1000 == 0)
+    {
+        Console.WriteLine("Index {0}", i);
+    }
     gb = new GameBoard();
     foreach (ShipBase ship in Ships)
     {
@@ -62,27 +65,27 @@ for (int i = 0; i < 100000; i++)
                 continue;
             }
             //Check exact cells
-            if (!checkExactCells(placeXstart, placeYstart, placeXend, placeYend))
+            if (!areExactCellsEmpty(placeXstart, placeYstart, placeXend, placeYend))
             {
                 continue;
             }
             //Check cells below
-            if (!checkCellsBelow(placeXend + 1, placeYstart - 1, placeYend + 1))
+            if (!areCellsBelowEmpty(placeXend + 1, placeYstart - 1, placeYend + 1))
             {
                 continue;
             }
             //Check cells above
-            if (!checkCellsAbove(placeXstart - 1, placeYstart - 1, placeYend + 1))
+            if (!areCellsAboveEmpty(placeXstart - 1, placeYstart - 1, placeYend + 1))
             {
                 continue;
             }
             //Check cells on left (vertical)
-            if (!checkCellsLeft(placeXstart - 1, placeYstart - 1, placeXend + 1))
+            if (!areCellsLeftEmpty(placeXstart - 1, placeYstart - 1, placeXend + 1))
             {
                 continue;
             }
             //Check cells on right (vertical)
-            if (!checkCellsRight(placeXstart - 1, placeYend + 1, placeXend + 1))
+            if (!areCellsRightEmpty(placeXstart - 1, placeYend + 1, placeXend + 1))
             {
                 continue;
             }
@@ -93,13 +96,16 @@ for (int i = 0; i < 100000; i++)
         }
         
     }
+
+    bool validBoard = isBoardValid(gb);
     
-    if (!isBoardValid(gb))
+    if (!validBoard)
     {
-        Console.WriteLine("Validity: {0}", isBoardValid(gb));
+        Console.WriteLine("Validity: {0}", validBoard);
         gb.printBoardText();
         break;
     }
+    //gb.printBoardText();
 }
 
 bool isBoardValid(GameBoard g)
@@ -132,7 +138,7 @@ bool areNeighboursValid(int i, int j, MarkedSpace m, GameBoard g)
         isRightNeighbourValid(i, j, myMark, gb) ||
         isDownLeftNeighbourValid(i, j, myMark, gb) ||
         isDownNeighbourValid(i, j, myMark, gb) ||
-        isDownRightNeighbourValid(9 + 1, 9 + 1, myMark, gb))
+        isDownRightNeighbourValid(i, j, myMark, gb))
     {
         return true;
     }
@@ -234,7 +240,7 @@ bool isDownLeftNeighbourValid(int i, int j, MarkedSpace m, GameBoard g)
 
 bool isDownNeighbourValid(int i, int j, MarkedSpace m, GameBoard g)
 {
-    i = i - 1;
+    i = i + 1;
     if (i >= g.Width)
     {
         return true;
@@ -263,14 +269,12 @@ bool isDownRightNeighbourValid(int i, int j, MarkedSpace m, GameBoard g)
     return false;
 }
 
-bool checkExactCells(int startX, int startY, int endX, int endY)
+bool areExactCellsEmpty(int startX, int startY, int endX, int endY)
 {
     for (int i = startX; i <= endX; i++)
     {
         for (int j = startY; j <= endY; j++)
         {
-            //Console.WriteLine("writting to: {0}, {1}", i, j);
-            //gb.getFieldByCoordinates(i, j).MarkedSpace = MarkedSpace.Hit;
             if (gb.getFieldByCoordinates(i, j).MarkedSpace != MarkedSpace.Empty)
             {
                 return false;
@@ -279,7 +283,7 @@ bool checkExactCells(int startX, int startY, int endX, int endY)
     }
     return true;
 }
-bool checkCellsBelow(int startX, int startY, int endY)
+bool areCellsBelowEmpty(int startX, int startY, int endY)
 {
     if (startX >= (gb.Width))
     {
@@ -296,10 +300,10 @@ bool checkCellsBelow(int startX, int startY, int endY)
         //Correct loop endong points on edges
         endY = gb.Width - 1;
     }
-    return checkExactCells(startX, startY, startX, endY);
+    return areExactCellsEmpty(startX, startY, startX, endY);
 }
 
-bool checkCellsAbove(int startX, int startY, int endY)
+bool areCellsAboveEmpty(int startX, int startY, int endY)
 {
     if (startX < 0)
     {
@@ -315,9 +319,9 @@ bool checkCellsAbove(int startX, int startY, int endY)
         //Correct loop endong points on edges
         endY = gb.Width - 1;
     }
-    return checkExactCells(startX, startY, startX, endY);
+    return areExactCellsEmpty(startX, startY, startX, endY);
 }
-bool checkCellsLeft(int startX, int startY, int endX)
+bool areCellsLeftEmpty(int startX, int startY, int endX)
 {
     if (startY < 0)
     {
@@ -331,9 +335,9 @@ bool checkCellsLeft(int startX, int startY, int endX)
     {
         startX = 0;
     }
-    return checkExactCells(startX, startY, endX, startY);
+    return areExactCellsEmpty(startX, startY, endX, startY);
 }
-bool checkCellsRight(int startX, int endY, int endX)
+bool areCellsRightEmpty(int startX, int endY, int endX)
 {
     if (endY >= gb.Width)
     {
@@ -347,7 +351,7 @@ bool checkCellsRight(int startX, int endY, int endX)
     {
         endX = gb.Width - 1;
     }
-    return checkExactCells(startX, endY, endX, endY);
+    return areExactCellsEmpty(startX, endY, endX, endY);
 }
 void setExactCells(int startX, int startY, int endX, int endY, int shipWidth)
 {
@@ -375,174 +379,3 @@ void setExactCells(int startX, int startY, int endX, int endY, int shipWidth)
         }
     }
 }
-
-
-//OLD CODE
-/*
-void checkExactCells(int startX, int startY, int endX, int endY)
-{
-    for (int i = startX; i <= endX; i++)
-    {
-        for (int j = startY; j <= endY; j++)
-        {
-            //Console.WriteLine("writting to: {0}, {1}", i, j);
-            gb.getFieldByCoordinates(i, j).MarkedSpace = MarkedSpace.Hit;
-        }
-    }
-}
-void checkCellsBelow(int startX, int startY, int endY)
-{
-    if (startX >= (gb.Width))
-    {
-        // Do not check if cells below are outside of board
-        return;
-    }
-    if (startY < 0)
-    {
-        //Correct loop starting points on edges
-        startY = 0;
-    }
-    if (endY >= gb.Width)
-    {
-        //Correct loop endong points on edges
-        endY = gb.Width - 1;
-    }
-    checkExactCells(startX, startY, startX, endY);
-}
-
-void checkCellsAbove(int startX, int startY, int endY)
-{
-    if (startX < 0)
-    {
-        return;
-    }
-    if (startY < 0)
-    {
-        //Correct loop starting points on edges
-        startY = 0;
-    }
-    if (endY >= gb.Width)
-    {
-        //Correct loop endong points on edges
-        endY = gb.Width - 1;
-    }
-    checkExactCells(startX, startY, startX, endY);
-}
-void checkCellsLeft(int startX, int startY, int endX)
-{
-    if (startY < 0)
-    {
-        return;
-    }
-    if (endX >= gb.Width)
-    {
-        endX = gb.Width - 1;
-    }
-    if (startX < 0)
-    {
-        startX = 0;
-    }
-    checkExactCells(startX, startY, endX, startY);
-}
-void checkCellsRight(int startX, int endY, int endX)
-{
-    if (endY >= gb.Width)
-    {
-        return;
-    }
-    if (startX < 0)
-    {
-        startX = 0;
-    }
-    if (endX >= gb.Width)
-    {
-        endX = gb.Width - 1;
-    }
-    checkExactCells(startX, endY, endX, endY);
-}
-void setExactCells(int startX, int startY, int endX, int endY, int shipWidth)
-{
-    for (int i = startX; i <= endX; i++)
-    {
-        for (int j = startY; j <= endY; j++)
-        {
-            //Console.WriteLine("Writting Fiels {0},{1}", i, j);
-            if (shipWidth == 4)
-            {
-                gb.setFieldByCoordinates(i, j, MarkedSpace.Czteromasztowiec);
-            }
-            if (shipWidth == 3)
-            {
-                gb.setFieldByCoordinates(i, j, MarkedSpace.Trojmasztowiec);
-            }
-            if (shipWidth == 2)
-            {
-                gb.setFieldByCoordinates(i, j, MarkedSpace.Dwumasztowiec);
-            }
-            if (shipWidth == 1)
-            {
-                gb.setFieldByCoordinates(i, j, MarkedSpace.Jednomasztowiec);
-            }
-        }
-    }
-}*/
-/*    for (int sSize = 5; sSize <= 5; sSize++)
-{
-    Console.WriteLine("Testing ship {0}", sSize);
-    for (int o = 0; o <= 1; o++)
-    {
-        for (int i = 0; i <= 10; i++)
-        {
-            for (int j = 0; j <= 10; j++)
-            {
-                Console.WriteLine("Testing {0},{1}", i, j);
-                int placeXstart = i;//rnd.Next(gb.Width);
-                int placeYstart = j;//rnd.Next(gb.Width);
-                int placeXend = placeXstart;
-                int placeYend = placeYstart;
-                if (o == 0)
-                {
-                    placeYend = placeYstart + sSize-1;
-                }
-                else
-                {
-                    placeXend = placeXstart + sSize-1;
-                }
-                int orientation = 1;//rnd.Next(1, 101) % 2;
-                if (placeXend >= gb.Width || placeYend >= gb.Width)
-                {
-                    continue;
-                }
-
-                gb = new GameBoard();
-                setExactCells(placeXstart, placeYstart, placeXend, placeYend, sSize);
-                //gb.printBoardText();
-                //chack cells below
-                checkCellsBelow(placeXend + 1, placeYstart - 1, placeYend + 1);
-                gb.printBoardText();
-                Console.WriteLine();
-                gb = new GameBoard();
-                setExactCells(placeXstart, placeYstart, placeXend, placeYend, sSize);
-                //gb.printBoardText();
-                //Check cells above
-                checkCellsAbove(placeXstart - 1, placeYstart - 1, placeYend + 1);
-                gb.printBoardText();
-                Console.WriteLine();
-                gb = new GameBoard();
-                setExactCells(placeXstart, placeYstart, placeXend, placeYend, sSize);
-                //gb.printBoardText();
-                //Check cells on left (vertical)
-                checkCellsLeft(placeXstart - 1, placeYstart - 1, placeXend + 1);
-                gb.printBoardText();
-                Console.WriteLine();
-                gb = new GameBoard();
-                setExactCells(placeXstart, placeYstart, placeXend, placeYend, sSize);
-                //gb.printBoardText();
-                //Check cells on right (vertical)
-                checkCellsRight(placeXstart - 1, placeYend + 1, placeXend + 1);
-                gb.printBoardText();
-                Console.WriteLine();
-            }
-        }
-    }
-}*/
