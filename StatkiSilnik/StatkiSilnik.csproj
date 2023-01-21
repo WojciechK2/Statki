@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Coordinates.cs" />
     <Compile Include="Field.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="GameBoard.cs" />
     <Compile Include="MarkedSpace.cs" />
     <Compile Include="MarkingBoard.cs" />
@@ -55,6 +56,8 @@
     <Compile Include="Ships\Jednomasztowiec.cs" />
     <Compile Include="Ships\ShipBase.cs" />
     <Compile Include="Ships\Trojmasztowiec.cs" />
+    <Compile Include="Utils\BoardValidator.cs" />
+    <Compile Include="Utils\ShipPlacementTool.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

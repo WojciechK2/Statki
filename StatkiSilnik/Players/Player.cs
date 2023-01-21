@@ -1,4 +1,5 @@
 ﻿using StatkiSilnik.Ships;
+using StatkiSilnik.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace StatkiSilnik.Players
         public GameBoard GameBoard { get; set; }
         public MarkingBoard MarkingBoard { get; set; }
         public List<ShipBase> Ships { get; set; }
+        protected BoardValidator boardValidator;
+        protected ShipPlacementTool shipPlacementTool;
         public bool HasLost
         {
             get { return Ships.All(x => x.isSunk); }
@@ -37,6 +40,8 @@ namespace StatkiSilnik.Players
             };
             GameBoard = new GameBoard();
             MarkingBoard = new MarkingBoard();
+            boardValidator = new BoardValidator();
+            shipPlacementTool = new ShipPlacementTool();
         }
 
         public void printBoardText() 
@@ -46,6 +51,11 @@ namespace StatkiSilnik.Players
         public void printMarkingBoardText()
         {
             MarkingBoard.printBoardText();
+        }
+
+        public void Shot()
+        {
+
         }
     }
 }

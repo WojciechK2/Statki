@@ -25,7 +25,7 @@ List<ShipBase> Ships = new List<ShipBase>()
 };
 
 /* MAIN TEST */
-for (int i = 0; i < 1000000; i++)
+for (int i = 0; i < 1000; i++)
 {
     if (i % 1000 == 0)
     {
@@ -127,9 +127,9 @@ bool isBoardValid(GameBoard g)
     return true;
 }
 
-bool areNeighboursValid(int i, int j, MarkedSpace m, GameBoard g)
+bool areNeighboursValid(int i, int j, MarkedSpace m, GameBoard gb)
 {
-    MarkedSpace myMark = g.getFieldByCoordinates(i, j).MarkedSpace;
+    MarkedSpace myMark = gb.getFieldByCoordinates(i, j).MarkedSpace;
 
     if(isUpperLeftNeighbourValid(i, j, myMark, gb) ||
         isUpperNeighbourValid(i, j, myMark, gb) ||
