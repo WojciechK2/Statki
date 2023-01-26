@@ -10,12 +10,10 @@ namespace StatkiSilnik.Players
 {
     public class ComputerPlayer : Player
     {
-        private Random rnd = new Random();
         public ComputerPlayer() : base()
         {
             shipPlacementTool = new ShipPlacementTool();
-            GameBoard = shipPlacementTool.placeShipsAtRandom(Ships);
+            GameBoard = shipPlacementTool.placeShipsAtRandom(ShipList,rnd);
         }
-
     }
 }

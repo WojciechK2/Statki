@@ -64,7 +64,7 @@ namespace StatkiSilnik
                     }
                     else
                     {
-                        line += "S" + " ";
+                        line += "M" + " ";
                     }
                 }
                 Console.WriteLine(line);

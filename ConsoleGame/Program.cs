@@ -10,17 +10,22 @@ Console.WriteLine("Hello, World!");
 ComputerPlayer p = new ComputerPlayer();
 ComputerPlayer p2 = new ComputerPlayer();
 
-p.printBoardText();
-Console.WriteLine();
-p.printMarkingBoardText();
+//p.printBoardText();
+//Console.WriteLine();
+//p.printMarkingBoardText();
 
-Console.WriteLine();
-p2.printBoardText();
-Console.WriteLine();
-p2.printMarkingBoardText();
+//Console.WriteLine();
+//p2.printBoardText();
+//Console.WriteLine();
+//p2.printMarkingBoardText();
 
-//One shot
-Coordinates c = p2.fire(new StatkiSilnik.Coordinates(1, 1));
-p.checkShoot(c);
+Game Game = new Game();
+Game.GameLoop();
 
-
+//Game.Player.printBoardText();
+//Console.WriteLine();
+//Game.Player.printMarkingBoardText();
+//Console.WriteLine();
+//Game.ComputerPlayer.printBoardText();
+//Console.WriteLine();
+//Game.ComputerPlayer.printMarkingBoardText();

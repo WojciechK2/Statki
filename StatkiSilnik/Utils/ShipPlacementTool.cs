@@ -10,16 +10,14 @@ namespace StatkiSilnik.Utils
     public class ShipPlacementTool
     {
         private GameBoard gb;
-        private Random rnd;
         private BoardValidator boardValidator;
 
         public ShipPlacementTool()
         {
             boardValidator = new BoardValidator();
         }
-        public GameBoard placeShipsAtRandom(List<ShipBase> Ships)
+        public GameBoard placeShipsAtRandom(List<ShipBase> Ships,Random rnd)
         {
-            rnd = new Random();
             gb = new GameBoard();
             while (true)
             {
