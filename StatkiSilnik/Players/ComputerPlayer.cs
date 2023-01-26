@@ -15,7 +15,6 @@ namespace StatkiSilnik.Players
         {
             shipPlacementTool = new ShipPlacementTool();
             GameBoard = shipPlacementTool.placeShipsAtRandom(Ships);
-            this.printBoardText();
         }
 
     }

@@ -13,6 +13,11 @@ namespace StatkiSilnik
         private ComputerPlayer computerPlayer;
         public Player Player { get; set; }
         public ComputerPlayer ComputerPlayer { get; set; }
+        public Game()
+        {
+            player = new Player();
+            computerPlayer = new ComputerPlayer();
+        }
         public void makeTurn()
         {
 

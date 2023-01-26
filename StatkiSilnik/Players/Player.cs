@@ -53,9 +53,27 @@ namespace StatkiSilnik.Players
             MarkingBoard.printBoardText();
         }
 
-        public void Shot()
+        public MarkedSpace checkShoot(Coordinates cords)
         {
+            MarkedSpace shotPlace = GameBoard.getFieldByCoordinates(cords.Row, cords.Column).MarkedSpace;
 
+            if(shotPlace == MarkedSpace.Empty)
+            {
+                return MarkedSpace.Miss;
+            }
+
+            //If it hit a ship
+            ShipBase ship = Ships.First(x => x.Name.ToString() == shotPlace.ToString());
+            Console.WriteLine(ship);
+
+            ship.Hits++;
+
+            return shotPlace;
+        }
+
+        public Coordinates fire(Coordinates cords)
+        {
+            return cords;
         }
     }
 }
