@@ -1,5 +1,7 @@
-﻿using StatkiSilnik.Ships;
+﻿using StatkiSilnik.Players.Fireing;
+using StatkiSilnik.Ships;
 using StatkiSilnik.Utils;
+using StatkiSilnik.Utils.ShipPlacementStrategy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +14,15 @@ namespace StatkiSilnik.Players
         public MarkingBoard MarkingBoard { get; set; }
         public List<ShipBase> ShipList { get; set; }
         protected BoardValidator boardValidator;
-        protected ShipPlacementTool shipPlacementTool;
         protected Random rnd;
         public bool HasLost
         {
             get { return ShipList.All(x => x.isSunk); }
         }
-        public Player()
+        public bool isComputer;
+        private ShipPlacementStrategy shipPlacementStrategy;
+        private FireingStrategy fireingStrategy;
+        public Player(bool isComputer)
         {
             ShipList = new List<ShipBase>()
             {
@@ -40,10 +44,19 @@ namespace StatkiSilnik.Players
             GameBoard = new GameBoard();
             MarkingBoard = new MarkingBoard();
             boardValidator = new BoardValidator();
-            shipPlacementTool = new ShipPlacementTool();
             rnd = new Random();
+            this.isComputer = isComputer;
+            if (isComputer)
+            {
+                shipPlacementStrategy = new ComputerPlayerShipPlacementStrategy();
+                fireingStrategy = new ComputerPlayerFire();
+            } else
+            {
+                shipPlacementStrategy = new HumanConsolePlayerShipPlacementStrategy();
+                fireingStrategy = new HumanConsolePlayerFire();
+            }
+            GameBoard = shipPlacementStrategy.placeShips(ShipList);
         }
-
         public void printBoardText() 
         {
             GameBoard.printBoardText();
@@ -52,7 +65,6 @@ namespace StatkiSilnik.Players
         {
             MarkingBoard.printBoardText();
         }
-
         public MarkedSpace checkShoot(Coordinates cords)
         {
             MarkedSpace shotPlace = GameBoard.getFieldByCoordinates(cords.Row, cords.Column).MarkedSpace;
@@ -78,45 +90,9 @@ namespace StatkiSilnik.Players
             MarkingBoard.setFieldByCoordinates(cords.Row, cords.Column, mPlace);
         }
 
-        public Coordinates randomFire()
+        public Coordinates fire()
         {
-            bool notSet = true;
-            int row,column;
-            row = rnd.Next(GameBoard.Width);
-            column = rnd.Next(GameBoard.Width);
-            while (notSet)
-            {
-                Console.WriteLine("Trying at: " + row.ToString() + " " + column.ToString());
-                //Not to fire on the previous fields
-                MarkedSpace anticipatedPlaceMark = MarkingBoard.getFieldByCoordinates(row, column).MarkedSpace;
-                Console.WriteLine(anticipatedPlaceMark);
-                if (anticipatedPlaceMark == MarkedSpace.Empty)
-                {
-                    notSet = false;
-                    break;
-                }
-                row = rnd.Next(GameBoard.Width);
-                column = rnd.Next(GameBoard.Width);
-            }
-            Console.WriteLine("Shooting at: " + row.ToString() + " " + column.ToString());
-            return new Coordinates(row,column);
-        }
-
-        public Coordinates fire(Coordinates cords)
-        {
-            bool notSet = true;
-            while (notSet)
-            {
-                //Not to fire on the previous fields
-                MarkedSpace anticipatedPlaceMark = MarkingBoard.getFieldByCoordinates(cords.Row, cords.Column).MarkedSpace;
-                Console.WriteLine(anticipatedPlaceMark);
-                if (anticipatedPlaceMark == MarkedSpace.Empty)
-                {
-                    notSet = false;
-                }
-            }
-            Console.WriteLine("Shooting at: " + cords.Row.ToString() + " " + cords.Column.ToString());
-            return cords;
+            return fireingStrategy.fire(GameBoard.Width, MarkingBoard);
         }
     }
 }

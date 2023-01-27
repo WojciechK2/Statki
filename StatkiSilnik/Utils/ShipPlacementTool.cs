@@ -54,32 +54,32 @@ namespace StatkiSilnik.Utils
                             continue;
                         }
                         //Check exact cells
-                        if (!areExactCellsEmpty(placeXstart, placeYstart, placeXend, placeYend))
+                        if (!areExactCellsEmpty(placeXstart, placeYstart, placeXend, placeYend, gb))
                         {
                             continue;
                         }
                         //Check cells below
-                        if (!areCellsBelowEmpty(placeXend + 1, placeYstart - 1, placeYend + 1))
+                        if (!areCellsBelowEmpty(placeXend + 1, placeYstart - 1, placeYend + 1, gb))
                         {
                             continue;
                         }
                         //Check cells above
-                        if (!areCellsAboveEmpty(placeXstart - 1, placeYstart - 1, placeYend + 1))
+                        if (!areCellsAboveEmpty(placeXstart - 1, placeYstart - 1, placeYend + 1, gb))
                         {
                             continue;
                         }
                         //Check cells on left (vertical)
-                        if (!areCellsLeftEmpty(placeXstart - 1, placeYstart - 1, placeXend + 1))
+                        if (!areCellsLeftEmpty(placeXstart - 1, placeYstart - 1, placeXend + 1, gb))
                         {
                             continue;
                         }
                         //Check cells on right (vertical)
-                        if (!areCellsRightEmpty(placeXstart - 1, placeYend + 1, placeXend + 1))
+                        if (!areCellsRightEmpty(placeXstart - 1, placeYend + 1, placeXend + 1, gb))
                         {
                             continue;
                         }
 
-                        setExactCells(placeXstart, placeYstart, placeXend, placeYend, ship.Width);
+                        setExactCells(placeXstart, placeYstart, placeXend, placeYend, ship.Width, gb);
 
                         break;
                     }
@@ -100,7 +100,7 @@ namespace StatkiSilnik.Utils
             return gb;
         }
 
-        private bool areExactCellsEmpty(int startX, int startY, int endX, int endY)
+        public bool areExactCellsEmpty(int startX, int startY, int endX, int endY, GameBoard gb)
         {
             for (int i = startX; i <= endX; i++)
             {
@@ -114,7 +114,7 @@ namespace StatkiSilnik.Utils
             }
             return true;
         }
-        private bool areCellsBelowEmpty(int startX, int startY, int endY)
+        public bool areCellsBelowEmpty(int startX, int startY, int endY, GameBoard gb)
         {
             if (startX >= (gb.Width))
             {
@@ -131,10 +131,10 @@ namespace StatkiSilnik.Utils
                 //Correct loop endong points on edges
                 endY = gb.Width - 1;
             }
-            return areExactCellsEmpty(startX, startY, startX, endY);
+            return areExactCellsEmpty(startX, startY, startX, endY, gb);
         }
 
-        private bool areCellsAboveEmpty(int startX, int startY, int endY)
+        public bool areCellsAboveEmpty(int startX, int startY, int endY, GameBoard gb)
         {
             if (startX < 0)
             {
@@ -150,9 +150,9 @@ namespace StatkiSilnik.Utils
                 //Correct loop endong points on edges
                 endY = gb.Width - 1;
             }
-            return areExactCellsEmpty(startX, startY, startX, endY);
+            return areExactCellsEmpty(startX, startY, startX, endY, gb);
         }
-        private bool areCellsLeftEmpty(int startX, int startY, int endX)
+        public bool areCellsLeftEmpty(int startX, int startY, int endX, GameBoard gb)
         {
             if (startY < 0)
             {
@@ -166,9 +166,9 @@ namespace StatkiSilnik.Utils
             {
                 startX = 0;
             }
-            return areExactCellsEmpty(startX, startY, endX, startY);
+            return areExactCellsEmpty(startX, startY, endX, startY, gb);
         }
-        private bool areCellsRightEmpty(int startX, int endY, int endX)
+        public bool areCellsRightEmpty(int startX, int endY, int endX, GameBoard gb)
         {
             if (endY >= gb.Width)
             {
@@ -182,9 +182,9 @@ namespace StatkiSilnik.Utils
             {
                 endX = gb.Width - 1;
             }
-            return areExactCellsEmpty(startX, endY, endX, endY);
+            return areExactCellsEmpty(startX, endY, endX, endY, gb);
         }
-        private void setExactCells(int startX, int startY, int endX, int endY, int shipWidth)
+        public void setExactCells(int startX, int startY, int endX, int endY, int shipWidth, GameBoard gb)
         {
             for (int i = startX; i <= endX; i++)
             {

@@ -9,52 +9,56 @@ namespace StatkiSilnik
 {
     public class Game
     {
-        private Player player;
-        private ComputerPlayer computerPlayer;
-        public Player Player { get => player; }
-        public ComputerPlayer ComputerPlayer { get => computerPlayer; }
+        private Player player1;
+        private Player player2;
+        public Player Player1 { get => player1; }
+        public Player Player2 { get => player2; }
+
+        //TODO update constructor later
         public Game()
         {
-            player = new ComputerPlayer();
-            computerPlayer = new ComputerPlayer();
+            player1 = new Player(true);
+            player2 = new Player(true);
         }
+
+        //TODO uncommment this later
         public void makeTurn()
         {
             Console.WriteLine("Player");
-            Coordinates p = player.randomFire();
-            MarkedSpace presult = computerPlayer.checkShoot(p);
-            player.markOpponentShot(p,presult);
+            Coordinates p = player1.fire();
+            MarkedSpace presult = player2.checkShoot(p);
+            player1.markOpponentShot(p,presult);
 
             Console.WriteLine("Computer Player");
-            Coordinates cp = computerPlayer.randomFire();
-            MarkedSpace cpresult = player.checkShoot(cp);
-            computerPlayer.markOpponentShot(cp, cpresult);
+            Coordinates cp = player2.fire();
+            MarkedSpace cpresult = player1.checkShoot(cp);
+            player2.markOpponentShot(cp, cpresult);
         }
         public void GameLoop() 
         {
-            player.printBoardText();
+            player1.printBoardText();
             Console.WriteLine();
-            computerPlayer.printBoardText();
+            player2.printBoardText();
 
-            while (!player.HasLost && !computerPlayer.HasLost)
+            while (!player1.HasLost && !player2.HasLost)
             {
                 makeTurn();
             }
 
-            player.printBoardText();
+            player1.printBoardText();
             Console.WriteLine();
-            player.printMarkingBoardText();
+            player1.printMarkingBoardText();
             Console.WriteLine();
-            computerPlayer.printBoardText();
+            player2.printBoardText();
             Console.WriteLine();
-            computerPlayer.printMarkingBoardText();
+            player2.printMarkingBoardText();
 
-            if (player.HasLost)
+            if (player1.HasLost)
             {
                 Console.WriteLine("player lost");
             }
 
-            if (computerPlayer.HasLost)
+            if (player2.HasLost)
             {
                 Console.WriteLine("computer player lost");
             }
