@@ -21,9 +21,13 @@ namespace StatkiSilnik.Players.Fireing
             column = rnd.Next(range);
             while (notSet)
             {
+                //DEBUG
                 Console.WriteLine("Trying at: " + row.ToString() + " " + column.ToString());
+
                 //Not to fire on the previous fields
                 MarkedSpace anticipatedPlaceMark = markingBoard.getFieldByCoordinates(row, column).MarkedSpace;
+                
+                //DEBUG
                 Console.WriteLine(anticipatedPlaceMark);
                 if (anticipatedPlaceMark == MarkedSpace.Empty)
                 {
@@ -33,7 +37,10 @@ namespace StatkiSilnik.Players.Fireing
                 row = rnd.Next(markingBoard.Width);
                 column = rnd.Next(markingBoard.Width);
             }
+
+            //DEBUG
             Console.WriteLine("Shooting at: " + row.ToString() + " " + column.ToString());
+
             return new Coordinates(row, column);
         }
     }

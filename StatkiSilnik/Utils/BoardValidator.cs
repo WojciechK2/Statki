@@ -26,7 +26,6 @@ namespace StatkiSilnik.Utils
             }
             return true;
         }
-
         private bool areNeighboursValid(int i, int j, MarkedSpace m, GameBoard gb)
         {
             MarkedSpace myMark = gb.getFieldByCoordinates(i, j).MarkedSpace;
@@ -44,7 +43,6 @@ namespace StatkiSilnik.Utils
             }
             return false;
         }
-
         private bool isUpperLeftNeighbourValid(int i, int j, MarkedSpace m, GameBoard gb)
         {
             i = i - 1;
@@ -60,7 +58,6 @@ namespace StatkiSilnik.Utils
             }
             return false;
         }
-
         private bool isUpperNeighbourValid(int i, int j, MarkedSpace m, GameBoard gb)
         {
             i = i - 1;
@@ -75,7 +72,6 @@ namespace StatkiSilnik.Utils
             }
             return false;
         }
-
         private bool isUpperRightNeighbourValid(int i, int j, MarkedSpace m, GameBoard gb)
         {
             i = i - 1;
@@ -91,7 +87,6 @@ namespace StatkiSilnik.Utils
             }
             return false;
         }
-
         private bool isLeftNeighbourValid(int i, int j, MarkedSpace m, GameBoard gb)
         {
             j = j - 1;
@@ -106,7 +101,6 @@ namespace StatkiSilnik.Utils
             }
             return false;
         }
-
         private bool isRightNeighbourValid(int i, int j, MarkedSpace m, GameBoard gb)
         {
             j = j + 1;
@@ -121,7 +115,6 @@ namespace StatkiSilnik.Utils
             }
             return false;
         }
-
         private bool isDownLeftNeighbourValid(int i, int j, MarkedSpace m, GameBoard gb)
         {
             i = i + 1;
@@ -137,7 +130,6 @@ namespace StatkiSilnik.Utils
             }
             return false;
         }
-
         private bool isDownNeighbourValid(int i, int j, MarkedSpace m, GameBoard gb)
         {
             i = i + 1;
@@ -152,7 +144,6 @@ namespace StatkiSilnik.Utils
             }
             return false;
         }
-
         private bool isDownRightNeighbourValid(int i, int j, MarkedSpace m, GameBoard gb)
         {
             i = i + 1;

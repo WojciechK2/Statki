@@ -46,7 +46,6 @@
     <Compile Include="Field.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameBoard.cs" />
-    <Compile Include="GameBuilder.cs" />
     <Compile Include="MarkedSpace.cs" />
     <Compile Include="MarkingBoard.cs" />
     <Compile Include="Players\Fireing\ComputerPlayerFire.cs" />
@@ -60,11 +59,13 @@
     <Compile Include="Ships\ShipBase.cs" />
     <Compile Include="Ships\Trojmasztowiec.cs" />
     <Compile Include="Utils\BoardValidator.cs" />
-    <Compile Include="Utils\HumanShipPlacement.cs" />
+    <Compile Include="Utils\Outputter\ConsoleOutputter.cs" />
+    <Compile Include="Utils\Outputter\Outputter.cs" />
     <Compile Include="Utils\ShipPlacementStrategy\ComputerPlayerShipPlacementStrategy.cs" />
     <Compile Include="Utils\ShipPlacementStrategy\HumanConsolePlayerShipPlacementStrategy.cs" />
     <Compile Include="Utils\ShipPlacementStrategy\ShipPlacementStrategy.cs" />
     <Compile Include="Utils\ShipPlacementTool.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

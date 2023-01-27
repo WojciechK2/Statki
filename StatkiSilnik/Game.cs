@@ -15,36 +15,57 @@ namespace StatkiSilnik
         public Player Player2 { get => player2; }
 
         //TODO update constructor later
-        public Game()
+        public Game(bool isPlayer1Computer, bool isPlayer2Computer)
         {
-            player1 = new Player(true);
-            player2 = new Player(true);
+            player1 = new Player(isPlayer1Computer);
+            player2 = new Player(isPlayer2Computer);
         }
-
-        //TODO uncommment this later
         public void makeTurn()
         {
-            Console.WriteLine("Player");
+            Console.WriteLine("Player1");
             Coordinates p = player1.fire();
             MarkedSpace presult = player2.checkShoot(p);
             player1.markOpponentShot(p,presult);
 
-            Console.WriteLine("Computer Player");
+            if (!player1.isComputer)
+            {
+                player1.GameBoard.printBoardText();
+                Console.WriteLine();
+                player1.MarkingBoard.printBoardText();
+                Console.WriteLine();
+            }
+
+            if (player2.HasLost)
+            {
+                return;
+            }
+
+            Console.WriteLine("Player2");
             Coordinates cp = player2.fire();
             MarkedSpace cpresult = player1.checkShoot(cp);
             player2.markOpponentShot(cp, cpresult);
+
+            if (!player2.isComputer)
+            {
+                player2.GameBoard.printBoardText();
+                Console.WriteLine();
+                player2.MarkingBoard.printBoardText();
+                Console.WriteLine();
+            }
         }
         public void GameLoop() 
         {
-            player1.printBoardText();
-            Console.WriteLine();
-            player2.printBoardText();
+            //DEBUG
+            //player1.printBoardText();
+            //Console.WriteLine();
+            //player2.printBoardText();
 
             while (!player1.HasLost && !player2.HasLost)
             {
                 makeTurn();
             }
 
+            //DEBUG
             player1.printBoardText();
             Console.WriteLine();
             player1.printMarkingBoardText();
@@ -53,14 +74,15 @@ namespace StatkiSilnik
             Console.WriteLine();
             player2.printMarkingBoardText();
 
+            //Needs to be rewritten to something more meaningful in UI 
             if (player1.HasLost)
             {
-                Console.WriteLine("player lost");
+                Console.WriteLine("player1 lost");
             }
 
             if (player2.HasLost)
             {
-                Console.WriteLine("computer player lost");
+                Console.WriteLine("player2 lost");
             }
         
         }

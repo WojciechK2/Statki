@@ -62,9 +62,12 @@ namespace StatkiSilnik
                     {
                         line += "!" + " ";
                     }
-                    else
+                    else if (f.MarkedSpace == MarkedSpace.Miss)
                     {
                         line += "M" + " ";
+                    } else
+                    {
+                        line += "@" + " ";
                     }
                 }
                 Console.WriteLine(line);

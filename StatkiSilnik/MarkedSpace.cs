@@ -14,6 +14,7 @@ namespace StatkiSilnik
         Trojmasztowiec,
         Dwumasztowiec,
         Jednomasztowiec,
+        DestroyedShipSpace,
         Hit,
         Miss
     }

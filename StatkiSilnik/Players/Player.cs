@@ -22,6 +22,7 @@ namespace StatkiSilnik.Players
         public bool isComputer;
         private ShipPlacementStrategy shipPlacementStrategy;
         private FireingStrategy fireingStrategy;
+
         public Player(bool isComputer)
         {
             ShipList = new List<ShipBase>()
@@ -50,13 +51,17 @@ namespace StatkiSilnik.Players
             {
                 shipPlacementStrategy = new ComputerPlayerShipPlacementStrategy();
                 fireingStrategy = new ComputerPlayerFire();
+                GameBoard = shipPlacementStrategy.placeShips(ShipList);
+                printBoardText();
+                printMarkingBoardText();
             } else
             {
                 shipPlacementStrategy = new HumanConsolePlayerShipPlacementStrategy();
                 fireingStrategy = new HumanConsolePlayerFire();
+                GameBoard = shipPlacementStrategy.placeShips(ShipList);
             }
-            GameBoard = shipPlacementStrategy.placeShips(ShipList);
         }
+
         public void printBoardText() 
         {
             GameBoard.printBoardText();
@@ -78,9 +83,18 @@ namespace StatkiSilnik.Players
             ShipBase ship = ShipList.First(x => (x.Name.ToString() == shotPlace.ToString() && x.isSunk == false));
             
             ship.Hits++;
-            Console.WriteLine("Targetted ship:" + ship.Name);
-            Console.WriteLine("How many hits:" + ship.Hits);
-            Console.WriteLine("Was sunk:" + ship.isSunk);
+
+            if (ship.isSunk)
+            {
+                Console.WriteLine("Sunk");
+            }
+
+            //DEBUG
+            //Console.WriteLine("Targetted ship:" + ship.Name);
+            //Console.WriteLine("How many hits:" + ship.Hits);
+            //Console.WriteLine("Was sunk:" + ship.isSunk);
+
+            GameBoard.setFieldByCoordinates(cords.Row, cords.Column, MarkedSpace.DestroyedShipSpace);
 
             return MarkedSpace.Hit;
         }
@@ -88,6 +102,11 @@ namespace StatkiSilnik.Players
         public void markOpponentShot(Coordinates cords, MarkedSpace mPlace)
         {
             MarkingBoard.setFieldByCoordinates(cords.Row, cords.Column, mPlace);
+            if (!isComputer)
+            {
+                printBoardText();
+                printMarkingBoardText();
+            }
         }
 
         public Coordinates fire()

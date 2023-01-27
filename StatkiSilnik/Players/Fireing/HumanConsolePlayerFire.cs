@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/* 
+ * Only to be used in the Terminal/Console context
+ */
+
 namespace StatkiSilnik.Players.Fireing
 {
     public class HumanConsolePlayerFire : FireingStrategy
